@@ -4,7 +4,6 @@ import Pagination from "@/Components/Pagination.jsx";
 import {PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT_MAP} from "@/constants.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import SelectInput from "@/Components/SelectInput.jsx";
-import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/16/solid/index.js";
 import TableHeading from "@/Components/TableHeading.jsx";
 
 export default function Index({ auth, projects, queryParams = null }) {
@@ -89,7 +88,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                       sort_field={queryParams.sort_field}
                       sort_direction={queryParams.sort_direction}
                       sortChanged={sortChange}
-                    >Create Date</TableHeading>
+                    >Due Date</TableHeading>
 
                     <th className="px-3 py-2">Created By</th>
                     <th className="px-3 py-2 text-right">Actions</th>
@@ -136,7 +135,9 @@ export default function Index({ auth, projects, queryParams = null }) {
                         <img src={project.image_path} alt={project.name}
                              style={{width: 60}}/>
                       </td>
-                      <td className="px-3 py-3">{project.name}</td>
+                      <th className="px-3 py-2 hover:underline text-gray-100 text-nowrap">
+                        <Link href={route('project.show', project.id)}>{project.name}</Link>
+                      </th>
                       <td className="px-3 py-3">
                         {/*{project.status}*/}
                         <span className={"px-2 py-1 rounded text-white " +
