@@ -9,6 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectResource extends JsonResource
 {
+    //Disable wrap so instead of project.data.name we can use directly project.name
+    public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
