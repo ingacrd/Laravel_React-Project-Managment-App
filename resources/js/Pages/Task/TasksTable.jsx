@@ -5,7 +5,7 @@ import {TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT_MAP} from "@/constants.jsx";
 import {Link, router} from "@inertiajs/react";
 import Pagination from "@/Components/Pagination.jsx";
 
-export default function TasksTable({tasks, queryParams = null,
+export default function TasksTable({tasks, success, queryParams = null,
                                      hideProjectColumn = false }) {
   queryParams = queryParams || {};
   const searchFieldChanged = (name, value) => {
@@ -41,9 +41,21 @@ export default function TasksTable({tasks, queryParams = null,
     router.get(route('task.index'), queryParams)
   }
 
+  const deleteTask = (task) => {
+    if(!window.confirm('Are you sure you want to delete the task?')){
+      return;
+    }
+    router.delete(route("task.destroy", task.id))
+  }
+
 
   return (
     <>
+      {success && (
+        <div className="bg-emerald-500 py-2 px-4 text-white rounded mb-4">
+          {success}
+        </div>
+      )}
       <div className="overflow-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead
@@ -147,10 +159,12 @@ export default function TasksTable({tasks, queryParams = null,
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1">
                   Edit
                 </Link>
-                <Link href={route("task.destroy", task.id)}
-                      className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1">
+                <button
+                  onClick={(e) => deleteTask(task)}
+                  className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
+                >
                   Delete
-                </Link>
+                </button>
               </td>
 
             </tr>
